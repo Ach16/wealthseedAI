@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     OPENROUTER_API_KEY: str | None = None
     OPENROUTER_MODEL: str = "google/gemini-2.5-flash"
     GROK_API_KEY: str | None = None
+    HF_TOKEN: str | None = None
     
     DEFAULT_PROVIDER: str = "openrouter"
     FALLBACK_PROVIDER: str = "grok"

@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# environments
+.env
+venv/
+env/
+ENV/
+.venv/
+
+# testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# sqlite database - we don't want to copy the local one if we use a persistent volume, 
+# although copying it initially might be okay. Better to exclude it to prevent overwriting prod data if rebuilding.
+# wealthseed.db
+# chroma_db/

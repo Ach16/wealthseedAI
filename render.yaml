@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: wealthseed-backend
+    env: docker
+    region: ohio # or whichever is closest
+    plan: free # or starter if you need more resources
+    rootDir: backend
+    healthCheckPath: /docs
+    disk:
+      name: data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: OPENROUTER_MODEL
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      # Tell the app to use the mounted disk for the SQLite database
+      # Assuming you update app settings to read this, else it will use default path.
+      - key: DATABASE_URL
+        value: sqlite:////app/data/wealthseed.db
+      - key: CHROMA_DB_PATH
+        value: /app/data/chroma_db

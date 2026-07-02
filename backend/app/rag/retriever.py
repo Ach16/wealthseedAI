@@ -1,6 +1,6 @@
 from typing import List
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_core.documents import Document
 from app.core.config import settings
 import logging
@@ -8,11 +8,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Initialize embeddings globally to reuse the model
-# We use all-MiniLM-L6-v2 as requested for fast, local embedding
+# We use all-MiniLM-L6-v2 via Inference API to save memory
 try:
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    embeddings = HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",
+        huggingfacehub_api_token=settings.HF_TOKEN
+    )
 except Exception as e:
-    logger.error(f"Failed to initialize HuggingFace embeddings: {e}")
+    logger.error(f"Failed to initialize HuggingFace API embeddings: {e}")
     embeddings = None
 
 def get_vectorstore() -> Chroma:
